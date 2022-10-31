@@ -1,0 +1,100 @@
+
+// C++ program to sort link list
+// using insertion sort
+#include <bits/stdc++.h>
+using namespace std;
+
+struct Node {
+	int val;
+	struct Node* next;
+	Node(int x)
+	{
+		val = x;
+		next = NULL;
+	}
+};
+
+class LinkedlistIS {
+
+public:
+	Node* head;
+	Node* sorted;
+
+	void push(int val)
+	{
+		/* allocate node */
+		Node* newnode = new Node(val);
+		/* link the old list off the new node */
+		newnode->next = head;
+		/* move the head to point to the new node */
+		head = newnode;
+	}
+
+	// function to sort a singly linked list using insertion
+	// sort
+	void insertionSort(Node* headref)
+	{
+		Node*p=headref;
+	    sorted=NULL;
+	    while(p!=NULL)
+	    {
+	        Node*q=p->next;
+
+	        sortedInsert(p);
+
+	        p=q;
+
+	    }
+	    head=sorted;
+
+	}
+
+	void sortedInsert(Node* newnode)
+	{
+
+	    if(sorted==NULL || sorted->val>=newnode->val)
+	    {
+	        newnode->next=sorted;
+	        sorted=newnode;
+	    }
+
+	    else{
+	        Node*p=sorted;
+
+	        while(p->next!=NULL and p->next->val<newnode->val)
+	        {
+	            p=p->next;
+	        }
+	        newnode->next=p->next;
+	        p->next=newnode;
+
+	    }
+
+	}
+
+	void printlist(Node* head)
+	{
+		while (head != NULL) {
+			cout << head->val << " ";
+			head = head->next;
+		}
+	}
+};
+
+int main()
+{
+	LinkedlistIS list;
+	list.head = NULL;
+	list.push(5);
+	list.push(20);
+	list.push(2);
+	list.push(4);
+	list.push(3);
+	list.push(30);
+	cout << "Linked List before sorting" << endl;
+	list.printlist(list.head);
+	cout << endl;
+	list.insertionSort(list.head);
+	cout << "Linked List After sorting" << endl;
+	list.printlist(list.head);
+}
